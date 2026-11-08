@@ -13,21 +13,15 @@ classifiers = [
 ]
 
 [project.scripts]
-chan-archiver = "chan:cli"
-chan = "chan:cli"
+chan-archiver = "chan_archiver.cli:run"
+chan = "chan_archiver.cli:run"
 
 [dependency-groups]
 dev = ["pytest>=8", "ruff>=0.6"]
 
 [build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
-
-[tool.hatch.build.targets.wheel]
-only-include = ["chan.py"]
-
-[tool.hatch.build.targets.sdist]
-include = ["chan.py", "boards.json", "tests/", "README.md"]
+requires = ["uv_build>=0.9,<0.14"]
+build-backend = "uv_build"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

@@ -46,11 +46,39 @@ Example cron entry:
 */10 * * * * CHAN_ARCHIVER_DIR=$HOME/4chan $HOME/.local/bin/chan fetch && $HOME/.local/bin/chan run
 ```
 
+## From Python
+
+```python
+from chan_archiver import Archiver, FourChanAPI
+
+for t in FourChanAPI().get_threads("w"):
+    print(t["no"], t.get("sub", ""))
+
+Archiver("/srv/4chan", thumbs=True).add("https://boards.4chan.org/w/thread/123456")
+```
+
 ## Development
 
 ```sh
 uv sync                      # create .venv with dev tools
 uv run pytest                # tests (offline, no network)
 uv run ruff check .          # lint
-uv run chan --help           # run from the checkout
+uv run ruff format .         # format
+uv run chan --help           # run from the checkout (or: uv run python -m chan_archiver)
 ```
+
+Code layout (`src/chan_archiver/`):
+
+| Module          | Purpose                                                    |
+| --------------- | ---------------------------------------------------------- |
+| `cli.py`        | argparse command line and console-script entry point       |
+| `menu.py`       | interactive menu (no subcommand)                           |
+| `archiver.py`   | `Archiver`: archive/ and completed/ management, run/fetch  |
+| `api.py`        | `FourChanAPI`: catalog, thread and status lookups          |
+| `client.py`     | `HttpClient`: per-host throttle, retries, verified downloads |
+| `page.py`       | thread HTML rewriting and external link extraction         |
+| `filters.py`    | `boards.json` loading and catalog matching                 |
+| `threadlist.py` | `threads.txt` with file locking                            |
+| `lock.py`       | single-instance lock                                       |
+| `urls.py`       | thread URL parsing                                         |
+| `config.py`     | constants and base directory default                       |
