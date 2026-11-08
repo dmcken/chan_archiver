@@ -45,3 +45,12 @@ Example cron entry:
 ```
 */10 * * * * CHAN_ARCHIVER_DIR=$HOME/4chan $HOME/.local/bin/chan fetch && $HOME/.local/bin/chan run
 ```
+
+## Development
+
+```sh
+uv sync                      # create .venv with dev tools
+uv run pytest                # tests (offline, no network)
+uv run ruff check .          # lint
+uv run chan --help           # run from the checkout
+```

@@ -59,14 +59,13 @@ import shutil
 import sys
 import threading
 import time
+from collections.abc import Iterable, Iterator
 from dataclasses import dataclass, field
 from enum import Enum
 from pathlib import Path
-from typing import Iterable, Iterator
 from urllib.parse import urlparse
 
 import requests
-
 
 # ---------------------------------------------------------------------------
 # Configuration

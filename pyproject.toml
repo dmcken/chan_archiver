@@ -16,6 +16,9 @@ classifiers = [
 chan-archiver = "chan:cli"
 chan = "chan:cli"
 
+[dependency-groups]
+dev = ["pytest>=8", "ruff>=0.6"]
+
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
@@ -24,5 +27,15 @@ build-backend = "hatchling.build"
 only-include = ["chan.py"]
 
 [tool.hatch.build.targets.sdist]
-include = ["chan.py", "boards.json", "README.md"]
+include = ["chan.py", "boards.json", "tests/", "README.md"]
 
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "W", "F", "I", "B", "UP", "SIM"]
