@@ -218,3 +218,11 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# chan-archiver runtime data (when run from the repo directory)
+archive/
+completed/
+threads.txt*
+toadd.txt
+toadd.tmp
+.chan.lock

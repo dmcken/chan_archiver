@@ -53,6 +53,7 @@ import hashlib
 import html
 import json
 import logging
+import os
 import re
 import shutil
 import sys
@@ -71,7 +72,9 @@ import requests
 # Configuration
 # ---------------------------------------------------------------------------
 
-BASE_DIR = Path(__file__).resolve().parent
+def default_base_dir() -> Path:
+    """Base directory: $CHAN_ARCHIVER_DIR if set, else the current directory."""
+    return Path(os.environ.get("CHAN_ARCHIVER_DIR") or Path.cwd())
 
 USER_AGENT = "Mozilla/5.0 (compatible; chan-archiver/2.0)"
 
@@ -316,13 +319,13 @@ class FourChan:
 
     def __init__(
         self,
-        base_dir: Path | str = BASE_DIR,
+        base_dir: Path | str | None = None,
         *,
         thumbs: bool = False,
         save_html: bool = True,
         host_intervals: dict[str, float] | None = None,
     ) -> None:
-        self.base_dir = Path(base_dir)
+        self.base_dir = Path(base_dir) if base_dir is not None else default_base_dir()
         self.archive_dir = self.base_dir / "archive" / SITE_DIR_NAME
         self.completed_dir = self.base_dir / "completed" / SITE_DIR_NAME
         self.threads = ThreadList(self.base_dir / "threads.txt")
@@ -909,8 +912,10 @@ def interactive(chan: FourChan) -> None:
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="4chan thread archiver")
-    parser.add_argument("--dir", type=Path, default=BASE_DIR,
-                        help="Base directory (threads.txt, archive/, completed/)")
+    parser.add_argument("--dir", type=Path, default=None,
+                        help="Base directory (threads.txt, boards.json, archive/, "
+                             "completed/). Default: $CHAN_ARCHIVER_DIR or the "
+                             "current directory")
     parser.add_argument("--thumbs", action="store_true", help="Also download thumbnails")
     parser.add_argument("--no-html", action="store_true",
                         help="Skip thread HTML/CSS/JS (JSON and images only)")
@@ -994,9 +999,14 @@ def main(argv: list[str] | None = None) -> int:
     return 0
 
 
-if __name__ == "__main__":
+def cli() -> None:
+    """Console-script entry point."""
     try:
         sys.exit(main())
     except KeyboardInterrupt:
         print("\nInterrupted.")
         sys.exit(130)
+
+
+if __name__ == "__main__":
+    cli()

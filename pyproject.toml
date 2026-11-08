@@ -1,0 +1,28 @@
+[project]
+name = "chan-archiver"
+version = "0.1.0"
+description = "Archive 4chan threads (JSON, HTML, images) and auto-watch catalogs by regex filters."
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [{ name = "David Mc Ken", email = "david.mcken@codepro.guru" }]
+dependencies = ["requests>=2.28"]
+classifiers = [
+    "Environment :: Console",
+    "Operating System :: POSIX",
+    "Programming Language :: Python :: 3",
+]
+
+[project.scripts]
+chan-archiver = "chan:cli"
+chan = "chan:cli"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+only-include = ["chan.py"]
+
+[tool.hatch.build.targets.sdist]
+include = ["chan.py", "boards.json", "README.md"]
+
