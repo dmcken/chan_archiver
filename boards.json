@@ -1,0 +1,5 @@
+{
+  "_comment": "Catalog filters used by 'chan.py fetch'. Each board maps to a list of groups; a thread matches a group when EVERY regex in that group matches its subject or opening comment (case-insensitive). A thread matching any group is archived.",
+  "w": [["black", "white"], ["bleach"], ["(cartography|map)"], ["comfy"], ["dark"], ["design"], ["dual", "(monitor|screen)"], ["ghibili"], ["home"], ["magic"], ["mobile"], ["mom"], ["nature"], ["programming"], ["rain"], ["space"]],
+  "wg": [["abstract"], ["aircraft"], ["Architecture"], ["aurora", "borealis"], ["black", "white"], ["bleach"], ["blue"], ["book"], ["castle"], ["circuit"], ["city"], ["desert"], ["duality"], ["dual", "(screen|monitor)"], ["fantasy"], ["Gauge"], ["ghibili"], ["landscape"], ["map"], ["mobile"], ["nature"], ["pattern"], ["pixel"], ["plane"], ["purple"], ["quote"], ["red"], ["sky", "line"], ["space"], ["star", "trek"], ["tank"], ["ultra", "wide"], ["witch"]]
+}
